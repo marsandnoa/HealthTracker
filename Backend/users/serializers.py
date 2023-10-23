@@ -16,7 +16,7 @@ class CalendarSerializer(serializers.ModelSerializer):
         model = Calendar
         fields = '__all__' 
 
-class CalendarEntry(serializers.ModelSerializer):
+class CalendarEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = CalendarEntry
         fields = '__all__' 

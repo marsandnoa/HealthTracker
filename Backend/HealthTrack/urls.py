@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from users import CustomUserView,CalendarView
+from users import CustomUserView,CalendarView,CalendarEntryView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +35,10 @@ urlpatterns = [
     path('calendar/findbyuserexercise/<int:user>/', CalendarView.findbyuserExercise, name='get_calendar_exercise_by_user'),
     path('calendar/findbyusercalories/<int:user>/', CalendarView.findbyuserCalories, name='get_calendar_calories_by_user'),
     path('calendar/findbyusernotes/<int:user>/', CalendarView.findbyuserNotes, name='get_calendar_notes_by_user'),
+    
+    path('calendarentry/create/<int:calendar_id>/', CalendarEntryView.create_calendar_entry, name='create_calendar_entry'),
+    path('calendarentry/findbycalendar/<int:calendar_id>/', CalendarEntryView.get_calendar_entries_by_calendar, name='get_entries_by_calendar'),
+    path('calendarentry/update/<int:pk>/', CalendarEntryView.update_calendar_entry, name='update_calendar_entry'),
+    path('calendarentry/delete/<int:pk>/', CalendarEntryView.delete_calendar_entry, name='delete_calendar_entry'),
+    
 ]
