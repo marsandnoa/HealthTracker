@@ -14,7 +14,7 @@ const App = () => {
   const [date, setDate] = useState('');
   const [entry, setEntry] = useState('');
   const [name, setName] = useState('');
-
+  const [nonInteger, setNonInteger] = useState(false);
   const handleNewEntry = () => {
     setEntry("");
     setName("");
@@ -52,7 +52,7 @@ const App = () => {
 
   const handleNewModifyEntrySubmit = async () => {
     let attemptData;
-
+    if(nonInteger) return;
     if (isModifyEntry) {
       
       attemptData = {
@@ -121,8 +121,17 @@ const App = () => {
   };
 
   const handleentryChange = (event) => {
-    setEntry(event.target.value);
+    const value = event.target.value;
+    const isInteger = /^\d+$/.test(value); 
+  
+    setEntry(value); 
+    if (!isInteger) {
+      setNonInteger(true);
+    } else {
+      setNonInteger(false);
+    }
   };
+
 
   const handleCalendarEntryClick = (entry) => {
     setSelectedCalendarEntry(prevSelected => prevSelected === entry ? null : entry);
@@ -235,6 +244,11 @@ const App = () => {
             <input type="text" placeholder="Exercise" className="mb-2 w-full p-2 rounded" value={name} onChange={handleNameChange} />
             <input type="text" placeholder="yyyy-mm-dd" className="mb-2 w-full p-2 rounded" value={date} onChange={handledate} />
             <input type="text" placeholder="Reps" className="mb-2 w-full p-2 rounded" value={entry} onChange={handleentryChange} />
+            {nonInteger ? (
+              <p className="text-red-500 text-xs italic">
+                Please enter a valid integer
+              </p>
+            ) : null}
             <button className="bg-blue-500 text-white p-2 rounded mr-2 hover:bg-blue-600 w-24 h-10" onClick={handleNewModifyEntrySubmit}>Submit</button>
           </div>
         ) : null}
