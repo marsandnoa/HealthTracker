@@ -6,6 +6,7 @@ import Auth from './Login/Auth';
 import Homepage from './Pages/Homepage';
 import Exercise from './Pages/Exercise';
 import Calories from './Pages/Calories';
+import Plot from './Pages/Plot';
 import Notes from './Pages/Notes';
 import { UserProvider } from './UserContext';
 function App() {
@@ -22,7 +23,7 @@ function App() {
             <Route path='/Exercise' element={<Exercise />} />
             <Route path='/Calories' element={<Calories />} />
             <Route path='/Notes' element={<Notes />} />
-            <Route path='/Plot' element={<Exercise />} />
+            <Route path='/Plot' element={<Plot />} />
           </Routes>
         </Layout>
       ) : (
