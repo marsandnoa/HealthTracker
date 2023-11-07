@@ -1,5 +1,7 @@
-import { UserContext } from '../UserContext';
 import React, { useContext, useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+import { UserContext } from '../UserContext';
+import "chart.js/auto";
 
 const Main = () => {
   const { userData } = useContext(UserContext);
@@ -36,7 +38,6 @@ const Main = () => {
             if (secondResponse.ok) {
               const secondData = await secondResponse.json();
               setExerciseCalendarEntries(secondData);
-              console.log(secondData);
             } else {
               console.error('Failed to fetch budget entries');
             }
@@ -81,6 +82,7 @@ const Main = () => {
               const secondData = await secondResponse.json();
               setCaloriesCalendarEntries(secondData);
               console.log(secondData);
+              console.log(secondData[0].entry);
             } else {
               console.error('Failed to fetch budget entries');
             }
@@ -97,17 +99,74 @@ const Main = () => {
     fetchData();
   }, [userData.id]);
 
+  ExerciseCalendarEntries.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const exerciseEntryValues = ExerciseCalendarEntries.map((entry) => entry.entry);
+  const exerciseEntryDates = ExerciseCalendarEntries.map((entry) => entry.date);
+
+  const lineChartData1 = {
+    labels: exerciseEntryDates,
+    datasets: [
+      {
+        label: 'Exercise Data',
+        data: exerciseEntryValues, // Replace with your actual data
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const options1 = {
+    scales: {
+      x: {
+        type: 'category', 
+        position: 'bottom',
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  CaloriesCalendarEntries.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const calorieEntryValues = CaloriesCalendarEntries.map((entry) => entry.entry);
+  const calorieEntryDates = CaloriesCalendarEntries.map((entry) => entry.date);
+
+  const lineChartData2 = {
+    labels: calorieEntryDates,
+    datasets: [
+      {
+        label: 'Calory Data',
+        data: calorieEntryValues, // Replace with your actual data
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const options2 = {
+    scales: {
+      x: {
+        type: 'category', 
+        position: 'bottom',
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   return (
     <div className='flex flex-col items-center h-screen'>
       <div className='text-4xl font-bold text-blue-900 mb-4'>
-        Welcome, {userData.fullname}!
+        Exercise Plot
       </div>
-      <div className='max-w-md text-center'>
-        <p className="text-xl">
-        This application is to help track exercise, calories, and health issues.
-        Visit the exercise tab to log reps and exercise type, visit the calory page to log calories, and visit the notes page to log health notes.
-        </p>
+      <Line data={lineChartData1} options={options1} />
+
+      <div className='text-4xl font-bold text-blue-900 mb-4'>
+        Calory Plot
       </div>
+      <Line data={lineChartData2} options={options2} />
+
     </div>
   );
 };
