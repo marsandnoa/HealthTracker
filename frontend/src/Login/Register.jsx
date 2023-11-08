@@ -25,7 +25,7 @@ export const Register = (props) => {
 
     try {
       console.log(JSON.stringify(userData));
-      const response = await fetch("http://127.0.0.1:8000/user/create/", {
+      const response = await fetch("http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/user/create/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

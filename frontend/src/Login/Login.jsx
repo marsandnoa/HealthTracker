@@ -20,7 +20,7 @@ export const Login = (props) => {
     };
   
     try {
-      const response = await fetch("http://127.0.0.1:8000/user/login/", {
+      const response = await fetch("http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/user/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

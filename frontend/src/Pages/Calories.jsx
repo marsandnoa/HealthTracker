@@ -32,7 +32,7 @@ const App = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/calendarentry/delete/"+selectedCalendarEntry.id+"/", {
+      const response = await fetch("http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/calendarentry/delete/"+selectedCalendarEntry.id+"/", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const App = () => {
       let response;
   
       if (isNewEntry) {
-        response = await fetch("http://127.0.0.1:8000/calendarentry/create/"+calendar.id+"/", {
+        response = await fetch("http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/calendarentry/create/"+calendar.id+"/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const App = () => {
           body: JSON.stringify(attemptData),
         });
       } else {
-        response = await fetch("http://127.0.0.1:8000/calendarentry/update/" + selectedCalendarEntry.id+"/", {
+        response = await fetch("http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/calendarentry/update/" + selectedCalendarEntry.id+"/", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -140,7 +140,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const firstResponse = await fetch(`http://127.0.0.1:8000/calendar/findbyusercalories/${userData.id}/`, {
+        const firstResponse = await fetch(`http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/calendar/findbyusercalories/${userData.id}/`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ const App = () => {
           setCalendar(firstData);
 
           try {
-            const secondResponse = await fetch(`http://127.0.0.1:8000/calendarentry/findbycalendar/${firstData.id}/`, {
+            const secondResponse = await fetch(`http://ec2-18-189-150-72.us-east-2.compute.amazonaws.com:10000/calendarentry/findbycalendar/${firstData.id}/`, {
               method: "GET",
               headers: {
                 'Content-Type': 'application/json',
